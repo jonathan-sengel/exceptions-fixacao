@@ -1,5 +1,7 @@
 package entities.model;
 
+import entities.execptions.DomainException;
+
 /**
  *
  * @author Jow
@@ -50,10 +52,15 @@ public class Account {
         balance += amount;
     }
 
-    public void withdraw(Double amount) {
-        if (amount <= withdrawLimit) {
-            balance -= amount;
+    public void withdraw(Double amount) throws DomainException {
+        if (amount > withdrawLimit) {
+            throw new DomainException("Withdwaw error: The amount exceeds withdraw limit");
         }
+        if (amount > balance) {
+            throw new DomainException("Withdwaw error: Not enough balance");
+        }
+
+        balance -= amount;
     }
 
 }
